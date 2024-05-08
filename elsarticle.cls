@@ -106,7 +106,7 @@
     \def\thefnote{\alph{fnote}}}}
 \DeclareOption{doubleblind}{\doubleblindtrue}
 
-\ExecuteOptions{a4paper,10pt,oneside,onecolumn,number,preprint,centertitle}
+\ExecuteOptions{a4paper,12pt,oneside,onecolumn,number,preprint,centertitle}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions
 \LoadClass{article}
