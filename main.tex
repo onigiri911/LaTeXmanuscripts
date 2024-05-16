@@ -76,6 +76,7 @@
 \definecolor{TUteal}{RGB}{0,184,200}
 \definecolor{TUmarine}{RGB}{0,118,194}
 \definecolor{TUocean}{RGB}{0,155,119}
+
 \usepackage{pgfgantt}
 \usepackage{nicematrix}
 \usepackage{floatrow}
@@ -91,6 +92,7 @@
 \usetikzlibrary{mindmap}
 \usepackage{optidef}
 \usepackage{siunitx}
+\usepackage{longtable}
 \setlength\parskip{\smallskipamount}
 \DeclarePairedDelimiterXPP\BigOSI[2]%
   {\mathcal{O}}{(}{)}{}%
@@ -351,7 +353,7 @@ The segregated 38 review articles are screened further for relevance, of which 1
 
 The review summarises studies on common airflow structures found in different ventilated settings, droplet physics in respiratory aerosols for different indoor conditions, and both experimental and simulation studies used to mimic airborne transmission scenarios.
 
-\subsection{airflow in indoor environments}
+\subsection{Airflow in indoor environments}
 
 Airborne transmission in an indoor environment calls for discussing airflow patterns, which are the bulk carriers of pathogen-laden aerosols. The indoor airflow has multiple components and differs according to the setting, ambient room conditions, and occupancy. Indoor airflow mainly constitutes ventilation flow, flow due to temperature differences, and respiratory flows. Every setting has a unique configuration of occupants, obstructions and ventilation, making their interaction with different respiratory activities interesting. The overlap between different sources of airflow inside various indoor environments is illustrated through Table \ref{tab:mat}, qualitatively highlighting the mixing potential of the flows.
 
@@ -362,6 +364,8 @@ The first occupant configuration is observed in hospitals \cite{zhou2021experime
 In table \ref{tab:mat}, Ventilation Regime 1 is mixing ventilation, Ventilation Regime 2 is displacement ventilation, and Ventilation Regime 3 is stratum and cross ventilation. With the three different ventilation regimes, different overlaps between the three sources of airflow (differentiated by colour) were observed. From Table \ref{tab:mat}, it is evident that Ventilation regime 1 is the most widely used ventilation regime across all occupant configurations and almost all indoor settings. This is based on the idea that mixing ventilation can dilute the pathogen or pollutant concentration in the room \cite{srivastava2021effective}. Ventilation regimes 2 and 3 are less common in comparison because the indoor airflow is directional, upward and lateral, respectively, making them less versatile in most scenarios but more effective in some.
 
 \begin{table}[ht]
+    \caption{Schematics for indoor airflow matrix with three common occupant configurations and three common ventilation regimes. The airflow is differentiated into three types with colours as follows: \legendsquare{fill=resp} Respiratory flow \legendsquare{fill=vent} Ventilation flow \legendsquare{fill=therm} Thermal flow }
+    \label{tab:mat}
     \centering
     \begin{tabular}{|m{2.5cm}|m{4cm}|m{4cm}|m{4cm}|}
     \hline
@@ -380,8 +384,7 @@ In table \ref{tab:mat}, Ventilation Regime 1 is mixing ventilation, Ventilation 
     \textbf{References} & \cite{hang2014influence,romano2015numerical,liu2020full,lu2020reducing,zhou2021experimental,guo2022visualization,liu2023estimating} & \cite{zhou2021experimental,villafruela2019assessment,lu2020reducing} & \cite{jiang2009investigating,lu2020reducing} \\
     \hline
     \end{tabular}
-    \caption{Schematics for indoor airflow matrix with three common occupant configurations and three common ventilation regimes. The airflow is differentiated into three types with colours as follows: \legendsquare{fill=resp} Respiratory flow \legendsquare{fill=vent} Ventilation flow \legendsquare{fill=therm} Thermal flow }
-    \label{tab:mat}
+
 \end{table}
 
 \subsection{Droplet dynamics}
@@ -425,27 +428,23 @@ Epidemiological studies were very successful in identifying the high spreading p
 
 The two approaches to achieving an optimal ventilation design are experimental and numerical. Lab measurements in climate chambers with tracer gases or artificially generated aerosols have been performed to obtain the particle distribution in the presence of ventilation and occupant flow \cite{zhou2021experimental}. On the other hand, computational methods try to simulate aerosol movement by modelling the turbulence in respiratory flow, ventilation flow, droplet physics, and thermal flow using Computational Fluid Dynamics (CFD) \cite{wang2022evaluation}. CFD is a more popular method for researchers because of its accessibility and repeatability compared to full-scale experiments. Experimental studies have often been used for validating the CFD results, e.g. \cite{yin2009experimental} is a popular benchmark for validating numerical results.
 
-\subsection{Experiments in a controlled environment}
+\subsubsection{Experiments in a controlled environment}
 
-Mimicking airborne transmission in laboratory conditions involves accounting for numerous variables, making experiments challenging. Therefore, scaled-down \cite{poussou2010flow} or full-scale experiments with limited parameters \cite{luo2022role} are often more practical. Since scaled-down or limited full-scale experiments cannot be directly compared to extensive computational studies, they are frequently used to validate the numerical model \cite{li2020investigating,qin2023transmission,cortellessa2023effectiveness}. Full-scale experiments include an initial flow rate measurement at the ventilation supply to implement boundary conditions in the CFD simulations \cite{romano2015numerical}. Researchers have used different techniques to simulate the three components of airflow (i.e., respiratory jet, thermal plume, and ventilation flow).
+Mimicking airborne transmission in laboratory conditions involves accounting for numerous variables, making experiments challenging. Therefore, scaled-down \cite{poussou2010flow} or full-scale experiments with limited parameters \cite{luo2022role} are often more practical. Since scaled-down or limited full-scale experiments cannot be directly compared to extensive computational studies, they are frequently used to validate the numerical model \cite{li2020investigating,qin2023transmission,cortellessa2023effectiveness}. Full-scale experiments include an initial flow rate measurement at the ventilation supply to assign boundary conditions in the CFD simulations \cite{romano2015numerical}. Researchers have used different techniques to generate and measure the three major components of indoor airflow (i.e., respiratory jet, thermal plume, and ventilation flow), as shown in Table \ref{tab:exp}.
 
-One of the standard methods to simulate respiratory jets is to use tracer gas ( e.g., $CO_2$, $SF_6$, or $N_2O$ ) at or in front of a manikin head \cite{qian2008dispersion,ren2022practical,lu2022ventilation}. The gases used are often inert, and concentration monitors determine the distribution of the tracer gas in the test chamber to determine how indoor airflow affects the transport of gas molecules. Tracer gas decay studies calculate the air change per hour (ACH). Instead of seeding tracer gases, some studies seed smoke into the flow using smoke generators that produce thick smoke with high opacity, which is ideal for visualising the airflow. Smoke flow visualisation is not purely qualitative, as image processing methods can quantify the axial or lateral extent of the exhaled respiratory jet \cite{saarinen2015large,pan2022boundary}.
+The studies listed in the first column of Table \ref{tab:exp} have conducted experiments to either validate or complement the results from the numerical simulations. These studies have utilised various implements to mimic different sources of indoor airflow, as listed in the 2nd column of Table \ref{tab:exp}. Aerosol generators, breathing manikins, or human test subjects have been used to mimic respiratory flow. The aerosol generators are either seeded with DEHS (Di-Ethyl-Hexyl-Sebacat) \cite{jain2023numerical} or bacteria \cite{liu2020full}, or virus \cite{oksanen2022combining}. For ventilation flow in a room, most of the studies make use of ventilation supply from real-life settings \cite{romano2015numerical,duill2021impact} or test chambers \cite{zhang2019distribution, berrouk2010experimental}. At times, air cleaners have been used with or without standard ventilation to generate ventilation flow in the room \cite{oksanen2022combining, jain2023numerical}. For mimicking thermal flows, thermal manikins \cite{li2021effects} or heaters \cite{ho2021modeling} are used. In some cases, human subjects are also involved in experiments for generating thermal flows \cite{li2005role, deng2021control}.
 
-However, to mimic respiratory aerosols more closely, researchers use aerosol generators that make use of an aqueous salt solution, oil, or artificial saliva solution that produces droplets within the size range of the human respiratory droplets, exhibit coalescence, and evaporation \cite{zhang2019distribution,zhou2021experimental,jain2023numerical,pan2023predicting}. Some studies also add a proxy virus in the flow seeding solution, making an artificial bio-aerosol, to analyse the viability of the virus in the droplets \cite{oksanen2022combining,liu2020full,liu2023estimating}. After being spatially distributed in the room via the dominant airflow, the produced droplets are measured using optical particle counters or concentration monitors \cite{romano2015numerical,duill2021impact,quintero2022reducing}. The droplets are also affected by the thermal plumes from the occupant and are often simulated in experiments using thermal manikins made to mimic the heat loss of a human as closely as possible \cite{he2011cfd,villafruela2019assessment,li2022airborne,li2023transient}. 
-
-Airflow studies require the measurement of flow velocity or mass flux. To measure the flow velocities at the ventilation supply and exhausts, pitot-static tubes and a flowfinder based on the zero-pressure compensation method are used \cite{li2005role,jiang2009investigating}. For measurement of indoor airspeed at a point, hot-wire anemometers are the preferred choice of apparatus \cite{hang2015potential,qin2023transmission}. If the study requires the measurement of air velocities at different points in the room simultaneously, using an array of multiple hot wire anemometers might not be the best way to go about it since this is an intrusive flow measurement technique. Some studies perform Particle Image Velocimetry (PIV), which involves seeding the airflow with tracer particles that are illuminated by a laser sheet \cite{poussou2010flow,abkarian2020speech,liu2021simulation,faleiros2022tu}. The movement of the illuminated tracers is captured by high-speed cameras post-processed to obtain the velocity profile of an entire illuminated region.
-
-Modelling ventilation flow in indoor environments has been achieved in two ways. First is wind tunnel testing, where the free-stream flow through the test section is directed into the room model as a ventilation supply \cite{motamedi2022cfd}. While it eliminates the need to construct a dedicated indoor climate test chamber, factors like backflow at the exhaust can affect the measured airflow and droplet distribution. A climate chamber has an air handling unit that can produce ventilation flows inside the chamber \cite{berrouk2010experimental,cheng2021experimental,lu2022ventilation,li2023numerical}. It can produce flows from various ventilation regimes, which can be modified or enhanced using fans or air-cleaning devices.
-
-\begin{table}[h!]
-    \centering
-    \begin{tabular}{|m{4cm}|m{3.5cm}|m{3.5cm}|m{3.5cm}|}
+Depending on the different methods of generating flow and the purpose of the experiments, the flow parameters are measured using various techniques shown in third column of Table \ref{tab:exp}. Some studies inject tracer gas like $SF_6$, or $N_2O$ at the origin of airflow \cite{qian2008dispersion, cheng2021experimental} or exhaled $CO_2$ gas as tracer \cite{deng2021control} and measure the spatial concentration of the gases using sensors. Aerosol generators using DEHS or other saline solutions that form fine droplets are usually measured using aerosol spectrometers \cite{duill2021impact}, optical particle counters \cite{berrouk2010experimental} or aerosol monitors \cite{zhou2021experimental}. While, nebulised bio-aerosol solutions are measured using Anderson Cascade Impactor (ACI), which samples bacteria/viruses from the air into petri dishes \cite{liu2020full,liu2020experimental}. For setting up the numerical model, flow meters are used to measure the flow rate at ventilation supplies \cite{li2005role,liu2023estimating} and for validating it, anemometers are used to measure the velocity and temperature of the airflow inside the room \cite{li2023numerical,arpino2023cfd}. A few experiments also use Particle Image Velocimetry (PIV) \cite{faleiros2022tu} or Planar Laser-Induced Fluorescence (PLIF) \cite{poussou2010flow} to quantify the velocity and concentration fields, respectively.
+\LTcapwidth=\textwidth
+\begin{longtable}{|m{3.55cm}|m{3.5cm}|m{3.5cm}|m{3.5cm}|}
+\caption{Brief breakdown of experimental techniques in previous literature}
+\label{tab:exp}\\
     \hline
     \textbf{Studies} & \textbf{Flow generation method} & \textbf{Measurement method} & \textbf{Type of flow}\\
     \hline
-    \citet{berrouk2010experimental}& Aerosol spray gun, ventilation supply and thermal manikin & Anemometer and Particle counter & Respiratory, ventilation and thermal\\
+    \citet{berrouk2010experimental}& Aerosol spray gun, ventilation and thermal manikin & Anemometer and Particle counter & Respiratory, ventilation and thermal\\
     \hline
-    \citet{li2005role} & Ward patients and ventilation supply & Flow meters & Respiratory, ventilation, and thermal\\
+    \citet{li2005role} & Ward patients and ventilation & Flow meters & Respiratory, ventilation, and thermal\\
     \hline
     \citet{saarinen2015large} & Manikin dynamics & Tracer gas & Room air escape \\
     \hline
@@ -453,50 +452,53 @@ Modelling ventilation flow in indoor environments has been achieved in two ways.
     \hline
     \citet{faleiros2022tu}& A male subject & PIV & Respiratory and thermal\\
     \hline
-    \citet{romano2015numerical}& Ventilation supply and Nebuliser & Particle counters and Anemometers & Respiratory and ventilation\\
+    \citet{romano2015numerical}& Ventilation and Nebuliser & Particle counters and Anemometers & Respiratory and ventilation\\
     \hline
     \citet{quintero2022reducing}& Atomiser & Particle counters & Ventilation \\
     \hline
-    \citet{hang2015potential}& Thermal manikin and ventilation supply & Tracer gas & Respiratory, ventilation, and thermal \\
+    \citet{hang2015potential}& Thermal manikin and ventilation & Tracer gas & Respiratory, ventilation, and thermal \\
     \hline
     \citet{jain2023numerical}& Air cleaner & Aerosol generator and spectrometers & Ventilation \\
     \hline
-    \citet{li2023numerical}& Ventilation supply and thermal manikin & Anemometers  & Ventilation and thermal \\
+    \citet{li2023numerical}& Ventilation and thermal manikin & Anemometers  & Ventilation and thermal \\
     \hline
     \citet{ho2021modeling}& On-board heater & Anemometers & Thermal\\
     \hline
-    \citet{deng2021control}& Two test subjects and air conditioning system & Exhaled CO2 as tracer gas & Respiratory, ventilation and thermal\\
+    \citet{deng2021control}& Two test subjects and air conditioning system & Exhaled $CO_2$ as tracer gas & Respiratory, ventilation and thermal\\
     \hline
-    \citet{oksanen2022combining}& Ventilation supply, air cleaner and Nebuliser & ACI sampler and aerosol spectrometer & Ventilation and thermal\\
+    \citet{oksanen2022combining}& Ventilation, air cleaner and Nebuliser & ACI sampler and aerosol spectrometer & Ventilation and thermal\\
     \hline
     \citet{arpino2023cfd}& Ceiling diffusers & Anemometers & Ventilation \\
     \hline
     \citet{giri2022colliding}& Smoke generator & Flow visualisation & Respiratory flow\\
     \hline
-    \citet{liu2020experimental}& Ventilation supply and Bio-aerosol release & ACI sampler and plate counting & Ventilation and thermal \\
+    \citet{liu2020experimental}& Ventilation and Bio-aerosol release & ACI sampler and plate counting & Ventilation and thermal \\
     \hline
     \citet{qian2008dispersion}& Breathing manikins & Tracer gas & Respiratory\\
     \hline
-    \citet{lu2020reducing}& Ventilation supply & Tracer gas & Ventilation\\
+    \citet{lu2020reducing}& Ventilation & Tracer gas & Ventilation\\
     \hline
     \citet{poussou2010flow}& Ventilation and moving body & PIV and PLIF & Ventilation \\
     \hline
-    \citet{liu2020full}& Bio-aerosol generator and ventilation supply & Anemometers and ACI & Respiratory and Ventilation \\
+    \citet{liu2020full}& Bio-aerosol generator and ventilation & Anemometers and ACI & Respiratory and Ventilation \\
     \hline
     \citet{cheng2021experimental}& Breathing thermal manikin & Tracer gas & Ventilation, respiratory and thermal\\
     \hline
-    \citet{liu2023estimating}& Bio-aerosol generator and ventilation supply & ACI and flowmeter & Respiratory and ventilation \\
+    \citet{liu2023estimating}& Bio-aerosol generator and ventilation & ACI and flowmeter & Respiratory and ventilation \\
     \hline
     \citet{li2021effects}& Breathing thermal manikin & Tracer gas & Respiratory, ventilation, and thermal\\
     \hline
-    \end{tabular}
-    \caption{Summary of experimental techniques in previous literature}
-    \label{tab:exp}
-\end{table}
+    \citet{duill2021impact}& Test subjects and Air cleaner &  Aerosol spectrometer & Respiratory and Ventilation\\
+    \hline
+    \citet{zhou2021experimental}& Thermal manikin, aerosol generator, and ventilation  & Aerosol monitor & Respiratory, ventilation, and thermal \\
+    \hline
+    \citet{zhang2019distribution}& Ventilation, Thermal manikin, and Aerosol generator & Aerosol monitor & Respiratory, ventilation, and thermal\\
+    \hline
+\end{longtable}
 
-\subsection{Numerical simulations}
+\subsubsection{Numerical simulations}
 
-Computational Fluid Dynamics (CFD) is a versatile tool for airflow studies in indoor environments. Baseline numerical simulations can be performed with little computational resources and repeated reliably for optimisation. These codes are available commercially from companies like ANSYS, Siemens, and Dassault Systems. Moreover, more accessible open-source CFD codes like OpenFOAM, SU2, PALM, and xCompact3D can also be used. Most numerical codes solve the Navier-Stokes equations by splitting the velocity and pressure into mean (represented by the overline) and fluctuating components (represented by the prime). This process is called Reynolds decomposition and is given by the two equations:
+While experimental techniques in fluid mechanics make use of anemometers, sensors, flowmeters, and visualisation methods, Computational Fluid Dynamics (CFD) is a numerical approach making use of computer processors to solve fluid flow problems. This is achieved through codes that discretise the Navier Stokes equation into algebraic equations and solve them iteratively \cite{ferziger2002computational}. Commercially available codes like Ansys \cite{ANSYS}, STAR-CCM+ \cite{starccm}, ABAQUS \cite{abaqus} and open-source codes like OpenFOAM \cite{openfoam}, SU2 \cite{su2}, xcompact3D \cite{xcompact3d}, PALM \cite{palm}. Most numerical codes solve the Navier-Stokes equations by splitting the velocity and pressure into mean (represented by the overline) and fluctuating components (represented by the prime). This process is called Reynolds decomposition and is given by the two equations:
 
 \begin{equation}
     \textbf{u}(\textbf{x},t) = \bar{\textbf{u}}(\textbf{x}) + \textbf{u}'(\textbf{x},t)
@@ -526,18 +528,112 @@ where the overline represents the filtered variables. The non-linear term here y
 \end{equation}
 This SGS stress tensor requires eddy viscosity models like in RANS simulations, but instead of modelling the entire turbulence spectrum, only the small-scale turbulence in the flow needs to be modelled. Some of the most popular SGS models are the Smaroginsky Lilly model, the Wall Adapting Local Eddy-viscosity (WALE) model, the Vreman model, and the One-equation model.
 
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{|m{2.5cm}|m{4cm}|m{4cm}|m{4cm}|}
+\begin{longtable}{|m{3cm}|m{4.3cm}|m{4.4cm}|m{3.2cm}|}
+    \caption{Numerical studies classified based on varying levels of resolving turbulent scales}
+    \label{tab:num}\\
     \hline
-     \textbf{Numerical technique} & \textbf{RANS} & \textbf{LES} & \textbf{DNS} \\
+    \textbf{Simulation type} & \textbf{RANS} & \textbf{LES} & \textbf{DNS} \\
     \hline
-    \textbf{References with specifics} & & & \\
+    \textbf{Studies} & \citet{ren2021numerical} & \citet{feng2020study} & \citet{giri2022colliding} \\
+    
+     & \citet{li2020investigating} & \citet{khosronejad2020fluid} & \citet{chong2021extended} \\
+    
+     & \citet{dbouk2020respiratory} & \citet{zhang2019distribution} & \citet{diwan2020understanding} \\
+    
+     & \citet{liu2020experimental} & \citet{berrouk2010experimental} & \citet{singhal2022virus} \\
+    
+     & \citet{dbouk2020coughing} & \citet{pendar2020numerical} & \citet{rosti2020fluid} \\
+    
+     & \citet{aliyu2021dispersion} & \citet{abkarian2020speech} &  \\
+    
+     & \citet{zhou2021experimental} & \citet{saarinen2015large} &  \\
+    
+     & \citet{mirzaie2021covid} & \citet{li2023transient} &  \\
+    
+     & \citet{qian2008dispersion} & \citet{liu2021simulation} &  \\
+    
+     & \citet{li2005role} & \citet{quintero2022reducing} &  \\
+    
+     & \citet{villafruela2019assessment} & \citet{buchan2020predicting} &  \\
+    
+     & \citet{he2011cfd} & \citet{wu2023numerical} &  \\
+    
+     & \citet{jiang2009investigating} & \citet{fontes2020study}* &  \\
+    
+     & \citet{yan2021transmission} & \citet{salinas2022improved} &  \\
+    
+     & \citet{ren2021numerical} & \citet{krishnaprasad2023fluid} &  \\
+    
+     & \citet{faleiros2022tu} & \citet{vuorinen2020modelling} &  \\
+    
+     & \citet{romano2015numerical} & \citet{liu2023estimating} &  \\
+    
+     & \citet{lu2022ventilation} & \citet{oksanen2022combining} &  \\
+    
+     & \citet{lordly2022understanding} & \citet{li2022airborne} &  \\
+    
+     & \citet{guo2022visualization} & \citet{auvinen2022high} &  \\
+    
+     & \citet{qin2023transmission} &  &  \\
+    
+     & \citet{hang2014influence} &  &  \\
+    
+     & \citet{lu2020reducing} &  &  \\
+    
+     & \citet{pan2023predicting} &  &  \\
+    
+     & \citet{hang2015potential} &  &  \\
+    
+     & \citet{wu2023numerical} &  &  \\
+    
+     & \citet{liu2022numerical} &  &  \\
+    
+     & \citet{li2023numerical} &  &  \\
+    
+     & \citet{poussou2010flow} &  &  \\
+    
+     & \citet{luo2022role} &  &  \\
+    
+     & \citet{shao2021risk} &  &  \\
+    
+     & \citet{liu2019modeling} &  &  \\
+    
+     & \citet{ho2021modeling} &  &  \\
+    
+     & \citet{ou2022insufficient} &  &  \\
+    
+     & \citet{liu2020full} &  &  \\
+    
+     & \citet{cheng2021experimental} &  &  \\
+    
+     & \citet{wang2022evaluation} &  &  \\
+    
+     & \citet{liu2023estimating} &  &  \\
+    
+     & \citet{wei2023effects} &  &  \\
+    
+     & \citet{li2021effects} &  &  \\
+    
+     & \citet{cortellessa2023effectiveness} &  &  \\
+    
+     & \citet{srivastava2021effective} &  &  \\
+
+     & \citet{deng2021control} &  &  \\
+   
+     & \citet{xu2023cfd} &  &  \\
+    
+     & \citet{motamedi2022cfd} &  &  \\
+    
+     & \citet{arpino2023cfd} &  &  \\
+    
+     & \citet{pan2022boundary} &  &  \\
+    
+     & \citet{yang2021airborne} &  &  \\
+     & \citet{sen2021transmission} &  &  \\
+     & \citet{feng2020influence} &  &  \\
+     & \citet{fontes2020study}* &  &  \\
     \hline
-    \end{tabular}
-    \caption{}
-    \label{tab:num}
-\end{table}
+\end{longtable}
 
 \section{Discussion}
 
@@ -551,8 +647,6 @@ Apart from the limitations in methods, essential simplifications were made while
     \caption{Bar graph depicting the usage of different CFD approaches in indoor airborne transmission studies.}
     \label{fig:cfd}
 \end{figure}
-
-\section{Gaps in literature}
 
 \begin{figure}[ht]
     \centering
@@ -593,6 +687,8 @@ Social settings like restaurants have a high potential for airborne transmission
 %%
  \bibliographystyle{elsarticle-num-names} 
  \bibliography{cas-refs}
+
+\appendix
 
 %% else use the following coding to input the bibitems directly in the
 %% TeX file.
