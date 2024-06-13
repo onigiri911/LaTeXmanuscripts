@@ -1011,9 +1011,9 @@
          \ifx\@elsarticlemyfooteralign\@elsarticlemyfooteralignright%
            {}\hfill\@elsarticlemyfooter%
          \else%
-               Concept Literature review \ifx\@empty%
-                 Elsevier%
-            \else\fi\hfill\@date\fi%
+                \ifx\@empty%
+                 %
+            \else\fi\hfill\fi%
          \fi%
          \fi%
          \fi%
